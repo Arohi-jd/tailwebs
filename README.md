@@ -6,6 +6,19 @@ Teachers can create and manage assignments through a strict lifecycle (`Draft â†
 
 ---
 
+
+## Screenshots
+
+### Login
+<img src="https://github.com/user-attachments/assets/74091d9f-8a0e-4e58-af9e-f3cba30118b0">
+
+### Teacher Dashboard
+<img src="https://github.com/user-attachments/assets/c06f014f-a40a-4049-86e1-820b17a8cdc5">
+
+### Student Dashboard
+<img src="https://github.com/user-attachments/assets/03ebc2f2-43ca-4fa3-92c8-d435fb780094">
+
+---
 ## How the system works
 
 ### 1) Authentication and roles
@@ -124,18 +137,6 @@ Required environment variables:
 
 ---
 
-## Screenshots
-
-### Login
-<img src="https://github.com/user-attachments/assets/74091d9f-8a0e-4e58-af9e-f3cba30118b0">
-
-### Teacher Dashboard
-<img src="https://github.com/user-attachments/assets/c06f014f-a40a-4049-86e1-820b17a8cdc5">
-
-### Student Dashboard
-<img src="https://github.com/user-attachments/assets/03ebc2f2-43ca-4fa3-92c8-d435fb780094">
-
----
 
 ## Current feature summary
 
