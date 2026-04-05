@@ -1,8 +1,12 @@
+import { Inbox } from 'lucide-react';
+
 const EmptyState = ({ title, subtitle }) => (
-  <div className="card flex flex-col items-center justify-center py-16 text-center">
-    <div className="mb-3 text-3xl">📭</div>
-    <h3 className="text-lg font-semibold text-slate-700">{title}</h3>
-    <p className="mt-1 text-sm text-slate-500">{subtitle}</p>
+  <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-slate-50/50 py-16 px-6 text-center shadow-sm">
+    <div className="mb-4 inline-flex items-center justify-center rounded-full bg-slate-100 p-4 text-slate-400">
+      <Inbox size={40} strokeWidth={1.5} />
+    </div>
+    <h3 className="text-xl font-bold text-flux-navy">{title}</h3>
+    <p className="mt-2 text-sm text-slate-500 max-w-sm mx-auto">{subtitle}</p>
   </div>
 );
 

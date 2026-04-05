@@ -4,9 +4,15 @@ export default {
   theme: {
     extend: {
       colors: {
+        flux: {
+          navy: '#0F172A',
+          blue: '#0066FF',
+          green: '#00C853',
+          darkgray: '#475569'
+        },
         brand: {
-          500: '#4f46e5',
-          600: '#4338ca',
+          500: '#0066FF',
+          600: '#0052cc',
         },
       },
     },

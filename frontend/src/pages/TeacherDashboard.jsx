@@ -7,6 +7,7 @@ import AssignmentFormModal from '../components/AssignmentFormModal';
 import SubmissionsModal from '../components/SubmissionsModal';
 import EmptyState from '../components/EmptyState';
 import { formatDate } from '../utils/date';
+import { Plus, LogOut, FileText, Send, CheckCircle, Eye, Edit2, Trash2, TrendingUp } from 'lucide-react';
 
 const filters = ['All', 'Draft', 'Published', 'Completed'];
 
@@ -101,54 +102,85 @@ const TeacherDashboard = () => {
     setSubmissions(data);
   };
 
+  const getSummaryIcon = (status) => {
+    switch (status) {
+      case 'Draft': return <FileText className="text-slate-400" size={24} />;
+      case 'Published': return <Send className="text-flux-blue" size={24} />;
+      case 'Completed': return <CheckCircle className="text-flux-green" size={24} />;
+      default: return <TrendingUp className="text-flux-darkgray" size={24} />;
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-slate-100 px-4 py-6 md:px-10">
-      <div className="mx-auto max-w-7xl">
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <h1 className="text-2xl font-bold text-slate-800">Welcome, {user?.name}</h1>
-            <p className="text-sm text-slate-500">Manage assignment workflow from Draft to Completed</p>
+    <div className="min-h-screen bg-slate-50 font-sans">
+      {/* Top Banner / Header */}
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+        <div className="mx-auto max-w-7xl px-4 py-4 md:px-10 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+             <div className="flex gap-1 text-flux-green font-black text-xl tracking-tighter">
+                <span className="text-flux-darkgray">&gt;</span>
+                <span className="text-flux-blue">&gt;</span>
+                <span className="text-flux-green">&gt;</span>
+             </div>
+             <div>
+              <h1 className="text-xl font-bold text-flux-navy leading-tight">Welcome, {user?.name}</h1>
+              <p className="text-xs text-slate-500 font-medium tracking-wide">TEACHER DASHBOARD</p>
+             </div>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             <button
               onClick={() => {
                 setEditingAssignment(null);
                 setIsFormOpen(true);
               }}
-              className="rounded-lg bg-brand-500 px-4 py-2 text-sm font-medium text-white hover:bg-brand-600"
+              className="flex items-center gap-2 rounded-lg bg-flux-blue px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-flux-blue/20 hover:bg-flux-navy hover:shadow-lg transition-all"
             >
-              + Create Assignment
+              <Plus size={16} /> Create Assignment
             </button>
-            <button onClick={logout} className="rounded-lg border border-slate-300 px-4 py-2 text-sm">
-              Logout
+            <button onClick={logout} className="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+              <LogOut size={16} /> Logout
             </button>
           </div>
         </div>
+      </header>
 
-        {error && <p className="mb-4 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">{error}</p>}
+      <main className="mx-auto max-w-7xl px-4 py-8 md:px-10">
+        {error && (
+          <div className="mb-6 rounded-xl bg-red-50 border border-red-100 p-4 text-sm text-red-600 flex items-center gap-3">
+             <div className="w-2 h-2 rounded-full bg-red-600"></div>
+             {error}
+          </div>
+        )}
 
-        <div className="mb-6 grid gap-3 md:grid-cols-3">
+        {/* Stats Grid */}
+        <div className="mb-8 grid gap-4 md:grid-cols-3">
           {['Draft', 'Published', 'Completed'].map((status) => (
             <button
               key={status}
               onClick={() => onFilterChange(status)}
-              className="card text-left transition hover:border-brand-500"
+              className={`relative overflow-hidden rounded-2xl border bg-white p-6 text-left transition-all hover:shadow-md ${activeFilter === status ? 'border-flux-blue ring-1 ring-flux-blue shadow-sm' : 'border-slate-200 hover:border-slate-300'}`}
             >
-              <p className="text-xs text-slate-500">{status}</p>
-              <p className="mt-1 text-2xl font-bold text-slate-800">{summary[status] || 0}</p>
+              <div className="flex justify-between items-start mb-2">
+                <p className="text-sm font-semibold text-slate-500 uppercase tracking-wider">{status}</p>
+                <div className="p-2 rounded-lg bg-slate-50">
+                  {getSummaryIcon(status)}
+                </div>
+              </div>
+              <p className="text-4xl font-extrabold text-flux-navy">{summary[status] || 0}</p>
             </button>
           ))}
         </div>
 
-        <div className="mb-5 flex flex-wrap gap-2">
+        {/* Filters */}
+        <div className="mb-6 flex flex-wrap gap-2 pb-4 border-b border-slate-200">
           {filters.map((filter) => (
             <button
               key={filter}
               onClick={() => onFilterChange(filter)}
-              className={`rounded-full px-4 py-1.5 text-sm ${
+              className={`rounded-full px-5 py-2 text-sm font-semibold transition-all ${
                 activeFilter === filter
-                  ? 'bg-brand-500 text-white'
-                  : 'border border-slate-300 bg-white text-slate-700'
+                  ? 'bg-flux-navy text-white shadow-md'
+                  : 'border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:border-slate-300'
               }`}
             >
               {filter}
@@ -156,88 +188,97 @@ const TeacherDashboard = () => {
           ))}
         </div>
 
+        {/* Assignments Grid */}
         {assignments.length === 0 ? (
           <EmptyState
             title="No assignments in this view"
             subtitle="Create a new assignment or switch the filter above."
           />
         ) : (
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-2">
             {assignments.map((assignment) => (
-              <div key={assignment._id} className="card">
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <h3 className="text-lg font-semibold text-slate-800">{assignment.title}</h3>
-                    <p className="mt-1 text-sm text-slate-600">
-                      {assignment.description.length > 120
-                        ? `${assignment.description.slice(0, 120)}...`
-                        : assignment.description}
+              <div key={assignment._id} className="group flex flex-col rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:shadow-md hover:border-slate-300">
+                <div className="flex items-start justify-between gap-4 mb-3">
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-flux-navy leading-tight">{assignment.title}</h3>
+                    <p className="mt-2 text-sm text-slate-600 line-clamp-2">
+                      {assignment.description}
                     </p>
                   </div>
-                  <StatusBadge status={assignment.status} />
+                  <div className="flex-shrink-0">
+                    <StatusBadge status={assignment.status} />
+                  </div>
                 </div>
 
-                <p className="mt-3 text-xs text-slate-500">Due: {formatDate(assignment.dueDate)}</p>
-                <AssignmentStepper status={assignment.status} />
+                <div className="mb-5 flex items-center gap-2 text-xs font-semibold text-slate-500 bg-slate-50 inline-flex w-fit px-3 py-1.5 rounded-lg border border-slate-100">
+                  <span>Due:</span>
+                  <span className="text-flux-navy">{formatDate(assignment.dueDate)}</span>
+                </div>
+                
+                <div className="mt-auto">
+                    <div className="my-4">
+                        <AssignmentStepper status={assignment.status} />
+                    </div>
 
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {assignment.status === 'Draft' && (
-                    <>
-                      <button
-                        onClick={() => {
-                          setEditingAssignment(assignment);
-                          setIsFormOpen(true);
-                        }}
-                        className="rounded-md border border-slate-300 px-3 py-1.5 text-sm"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDelete(assignment._id)}
-                        className="rounded-md border border-red-300 px-3 py-1.5 text-sm text-red-600"
-                      >
-                        Delete
-                      </button>
-                      <button
-                        onClick={() => changeStatus(assignment._id, 'Published')}
-                        className="rounded-md bg-brand-500 px-3 py-1.5 text-sm text-white"
-                      >
-                        Publish
-                      </button>
-                    </>
-                  )}
+                    <div className="mt-4 flex flex-wrap gap-3 pt-4 border-t border-slate-100">
+                    {assignment.status === 'Draft' && (
+                        <>
+                        <button
+                            onClick={() => {
+                            setEditingAssignment(assignment);
+                            setIsFormOpen(true);
+                            }}
+                            className="flex-1 flex items-center justify-center gap-2 rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
+                        >
+                            <Edit2 size={16} /> Edit
+                        </button>
+                        <button
+                            onClick={() => handleDelete(assignment._id)}
+                            className="flex items-center justify-center gap-2 rounded-lg border border-red-200 px-4 py-2 text-sm font-semibold text-red-600 hover:bg-red-50 transition-colors"
+                        >
+                            <Trash2 size={16} /> Delete
+                        </button>
+                        <button
+                            onClick={() => changeStatus(assignment._id, 'Published')}
+                            className="w-full flex items-center justify-center gap-2 rounded-lg bg-flux-blue px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-flux-navy transition-colors mt-2"
+                        >
+                            <Send size={16} /> Publish
+                        </button>
+                        </>
+                    )}
 
-                  {assignment.status === 'Published' && (
-                    <>
-                      <button
+                    {assignment.status === 'Published' && (
+                        <>
+                        <button
+                            onClick={() => openSubmissions(assignment._id)}
+                            className="flex-1 flex items-center justify-center gap-2 rounded-lg border border-flux-blue text-flux-blue px-4 py-2.5 text-sm font-semibold hover:bg-blue-50 transition-colors"
+                        >
+                            <Eye size={16} /> View Submissions
+                        </button>
+                        <button
+                            onClick={() => changeStatus(assignment._id, 'Completed')}
+                            className="flex-1 flex items-center justify-center gap-2 rounded-lg bg-flux-green px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-600 transition-colors"
+                        >
+                            <CheckCircle size={16} /> Mark Completed
+                        </button>
+                        </>
+                    )}
+
+                    {assignment.status === 'Completed' && (
+                        <button
                         onClick={() => openSubmissions(assignment._id)}
-                        className="rounded-md border border-slate-300 px-3 py-1.5 text-sm"
-                      >
-                        View Submissions
-                      </button>
-                      <button
-                        onClick={() => changeStatus(assignment._id, 'Completed')}
-                        className="rounded-md bg-emerald-600 px-3 py-1.5 text-sm text-white"
-                      >
-                        Mark Completed
-                      </button>
-                    </>
-                  )}
-
-                  {assignment.status === 'Completed' && (
-                    <button
-                      onClick={() => openSubmissions(assignment._id)}
-                      className="rounded-md border border-slate-300 px-3 py-1.5 text-sm"
-                    >
-                      View Submissions
-                    </button>
-                  )}
+                        className="w-full flex items-center justify-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-100 transition-colors"
+                        >
+                        <Eye size={16} /> View Submissions
+                        </button>
+                    )}
+                    </div>
                 </div>
               </div>
             ))}
           </div>
         )}
-      </div>
+      </main>
 
       <AssignmentFormModal
         isOpen={isFormOpen}

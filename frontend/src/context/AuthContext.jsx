@@ -15,11 +15,34 @@ export const AuthProvider = ({ children }) => {
     setAuthToken(token);
   }, [token]);
 
+  useEffect(() => {
+    const validateSession = async () => {
+      if (!token) return;
+
+      try {
+        const { data } = await api.get('/auth/me');
+        if (data?.user) {
+          setUser(data.user);
+          localStorage.setItem('user', JSON.stringify(data.user));
+        }
+      } catch {
+        setToken('');
+        setUser(null);
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        setAuthToken('');
+      }
+    };
+
+    validateSession();
+  }, [token]);
+
   const login = async (email, password) => {
     setLoading(true);
     try {
       const { data } = await api.post('/auth/login', { email, password });
       setToken(data.token);
+      setAuthToken(data.token);
       setUser(data.user);
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
@@ -34,6 +57,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const { data } = await api.post('/auth/signup', { name, email, password, role });
       setToken(data.token);
+      setAuthToken(data.token);
       setUser(data.user);
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
