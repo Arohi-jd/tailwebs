@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-const rawApiUrl = (import.meta.env.VITE_API_URL || 'http://localhost:5001').replace(/\/$/, '');
-const API_URL = rawApiUrl.endsWith('/api') ? rawApiUrl : `${rawApiUrl}/api`;
+const rawApiUrl = (import.meta.env.VITE_API_URL || 'http://localhost:5001').replace(/\/+$/, '');
+const normalizedApiUrl = rawApiUrl.replace(/(\/api)+$/, '/api');
+const API_URL = normalizedApiUrl.endsWith('/api') ? normalizedApiUrl : `${normalizedApiUrl}/api`;
 const initialToken = typeof window !== 'undefined' ? localStorage.getItem('token') : '';
 
 export const api = axios.create({
