@@ -64,28 +64,28 @@ const StudentDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50/90 bg-app-bg bg-cover bg-fixed bg-center bg-blend-overlay font-sans">
+    <div className="min-h-screen flex flex-col bg-slate-50/90 bg-app-bg bg-cover bg-fixed bg-center bg-blend-overlay font-sans">
       {/* Top Banner / Header */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+      <header className="bg-flux-navy/95 border-b border-slate-800 sticky top-0 z-30 shadow-lg backdrop-blur-sm">
         <div className="mx-auto max-w-6xl px-4 py-4 md:px-10 flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
              <div className="flex gap-1 text-flux-green font-black text-xl tracking-tighter">
-                <span className="text-flux-darkgray">&gt;</span>
+                <span className="text-slate-500">&gt;</span>
                 <span className="text-flux-blue">&gt;</span>
                 <span className="text-flux-green">&gt;</span>
              </div>
              <div>
-              <h1 className="text-xl font-bold text-flux-navy leading-tight">Hello, {user?.name}</h1>
-              <p className="text-xs text-slate-500 font-medium tracking-wide">STUDENT SPACE</p>
+              <h1 className="text-xl font-bold text-white leading-tight">Hello, {user?.name}</h1>
+              <p className="text-xs text-slate-300 font-medium tracking-wide">STUDENT SPACE</p>
              </div>
           </div>
-          <button onClick={logout} className="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+          <button onClick={logout} className="flex items-center gap-2 rounded-lg border border-slate-600 bg-slate-800/70 px-4 py-2.5 text-sm font-medium text-slate-100 hover:bg-slate-700 hover:text-white transition-colors">
             <LogOut size={16} /> Logout
           </button>
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-4 py-8 md:px-10">
+      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 md:px-10">
         <div className="relative overflow-hidden rounded-2xl bg-white border border-slate-200 p-6 md:p-8 shadow-sm mb-8">
             <div className="absolute -right-10 -top-10 w-48 h-48 bg-flux-blue/5 rounded-full blur-2xl"></div>
             <div className="relative z-10 flex items-center justify-between mb-4">
@@ -214,6 +214,13 @@ const StudentDashboard = () => {
           </div>
         )}
       </main>
+
+      <footer className="border-t border-slate-800 bg-flux-navy/95 backdrop-blur-sm">
+        <div className="mx-auto max-w-6xl px-4 py-4 md:px-10 flex flex-wrap items-center justify-between gap-2 text-sm">
+          <p className="font-medium text-slate-200">© 2026 FLUX Assignment Portal</p>
+          <p className="text-slate-400">Keep learning, keep shipping</p>
+        </div>
+      </footer>
     </div>
   );
 };

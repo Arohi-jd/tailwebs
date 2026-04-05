@@ -132,19 +132,19 @@ const TeacherDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50/90 bg-app-bg bg-cover bg-fixed bg-center bg-blend-overlay font-sans">
+    <div className="min-h-screen flex flex-col bg-slate-50/90 bg-app-bg bg-cover bg-fixed bg-center bg-blend-overlay font-sans">
       {/* Top Banner / Header */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+      <header className="bg-flux-navy/95 border-b border-slate-800 sticky top-0 z-30 shadow-lg backdrop-blur-sm">
         <div className="mx-auto max-w-7xl px-4 py-4 md:px-10 flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
              <div className="flex gap-1 text-flux-green font-black text-xl tracking-tighter">
-                <span className="text-flux-darkgray">&gt;</span>
+                <span className="text-slate-500">&gt;</span>
                 <span className="text-flux-blue">&gt;</span>
                 <span className="text-flux-green">&gt;</span>
              </div>
              <div>
-              <h1 className="text-xl font-bold text-flux-navy leading-tight">Welcome, {user?.name}</h1>
-              <p className="text-xs text-slate-500 font-medium tracking-wide">TEACHER DASHBOARD</p>
+              <h1 className="text-xl font-bold text-white leading-tight">Welcome, {user?.name}</h1>
+              <p className="text-xs text-slate-300 font-medium tracking-wide">TEACHER DASHBOARD</p>
              </div>
           </div>
           <div className="flex gap-3">
@@ -153,18 +153,18 @@ const TeacherDashboard = () => {
                 setEditingAssignment(null);
                 setIsFormOpen(true);
               }}
-              className="flex items-center gap-2 rounded-lg bg-flux-blue px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-flux-blue/20 hover:bg-flux-navy hover:shadow-lg transition-all"
+              className="flex items-center gap-2 rounded-lg bg-flux-blue px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-flux-blue/30 hover:bg-blue-500 hover:shadow-lg transition-all"
             >
               <Plus size={16} /> Create Assignment
             </button>
-            <button onClick={logout} className="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
+            <button onClick={logout} className="flex items-center gap-2 rounded-lg border border-slate-600 bg-slate-800/70 px-4 py-2.5 text-sm font-medium text-slate-100 hover:bg-slate-700 hover:text-white transition-colors">
               <LogOut size={16} /> Logout
             </button>
           </div>
         </div>
       </header>
 
-      <main className="mx-auto max-w-7xl px-4 py-8 md:px-10">
+      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 md:px-10">
         {error && (
           <div className="mb-6 rounded-xl bg-red-50 border border-red-100 p-4 text-sm text-red-600 flex items-center gap-3">
              <div className="w-2 h-2 rounded-full bg-red-600"></div>
@@ -299,6 +299,13 @@ const TeacherDashboard = () => {
           </div>
         )}
       </main>
+
+      <footer className="border-t border-slate-800 bg-flux-navy/95 backdrop-blur-sm">
+        <div className="mx-auto max-w-7xl px-4 py-4 md:px-10 flex flex-wrap items-center justify-between gap-2 text-sm">
+          <p className="font-medium text-slate-200">© 2026 FLUX Assignment Portal</p>
+          <p className="text-slate-400">Built for teachers & students</p>
+        </div>
+      </footer>
 
       <AssignmentFormModal
         isOpen={isFormOpen}
