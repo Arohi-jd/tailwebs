@@ -22,6 +22,10 @@ const StudentDashboard = () => {
       setAssignments(assignmentsRes.data);
       setSubmissions(submissionsRes.data);
     } catch (err) {
+      if (err.response?.status === 401) {
+        logout();
+        return;
+      }
       setError(err.response?.data?.message || 'Failed to load assignments');
     }
   };
@@ -51,12 +55,16 @@ const StudentDashboard = () => {
       setAnswers((prev) => ({ ...prev, [assignmentId]: '' }));
       await loadData();
     } catch (err) {
+      if (err.response?.status === 401) {
+        logout();
+        return;
+      }
       setError(err.response?.data?.message || 'Submission failed');
     }
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans">
+    <div className="min-h-screen bg-slate-50/90 bg-app-bg bg-cover bg-fixed bg-center bg-blend-overlay font-sans">
       {/* Top Banner / Header */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
         <div className="mx-auto max-w-6xl px-4 py-4 md:px-10 flex flex-wrap items-center justify-between gap-4">

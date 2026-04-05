@@ -74,26 +74,26 @@ const LoginPage = () => {
           <p className="text-lg text-slate-300 leading-relaxed">
             Elevate the way you manage assignments. Whether you're seamlessly assigning tasks or submitting work, FLUX streamlines the entire educational process.
           </p>
-          
+
           <div className="mt-10 flex gap-4">
-             <div className="bg-slate-800/50 backdrop-blur-md rounded-2xl p-4 border border-slate-700/50 flex items-center gap-4">
-                <div className="bg-flux-blue/20 p-3 rounded-full text-flux-blue">
-                   <Briefcase size={24} />
-                </div>
-                <div>
-                   <h4 className="font-semibold">For Teachers</h4>
-                   <p className="text-sm text-slate-400">Streamline grading</p>
-                </div>
-             </div>
-             <div className="bg-slate-800/50 backdrop-blur-md rounded-2xl p-4 border border-slate-700/50 flex items-center gap-4">
-                <div className="bg-flux-green/20 p-3 rounded-full text-flux-green">
-                   <GraduationCap size={24} />
-                </div>
-                <div>
-                   <h4 className="font-semibold">For Students</h4>
-                   <p className="text-sm text-slate-400">Track deadlines</p>
-                </div>
-             </div>
+            <div className="bg-slate-800/50 backdrop-blur-md rounded-2xl p-4 border border-slate-700/50 flex items-center gap-4">
+              <div className="bg-flux-blue/20 p-3 rounded-full text-flux-blue">
+                <Briefcase size={24} />
+              </div>
+              <div>
+                <h4 className="font-semibold">For Teachers</h4>
+                <p className="text-sm text-slate-400">Streamline grading</p>
+              </div>
+            </div>
+            <div className="bg-slate-800/50 backdrop-blur-md rounded-2xl p-4 border border-slate-700/50 flex items-center gap-4">
+              <div className="bg-flux-green/20 p-3 rounded-full text-flux-green">
+                <GraduationCap size={24} />
+              </div>
+              <div>
+                <h4 className="font-semibold">For Students</h4>
+                <p className="text-sm text-slate-400">Track deadlines</p>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -255,11 +255,10 @@ const LoginPage = () => {
                   <button
                     type="button"
                     onClick={() => setSignupForm((prev) => ({ ...prev, role: 'teacher' }))}
-                    className={`relative rounded-xl border-2 p-4 text-left transition-all ${
-                      signupForm.role === 'teacher'
+                    className={`relative rounded-xl border-2 p-4 text-left transition-all ${signupForm.role === 'teacher'
                         ? 'border-flux-blue bg-blue-50/50 shadow-md transform -translate-y-1'
                         : 'border-slate-100 bg-white hover:border-slate-300'
-                    }`}
+                      }`}
                   >
                     <div className={`absolute top-3 right-3 w-4 h-4 rounded-full border-2 ${signupForm.role === 'teacher' ? 'border-flux-blue bg-flux-blue' : 'border-slate-300'}`}>
                       {signupForm.role === 'teacher' && <div className="w-full h-full rounded-full border-2 border-white"></div>}
@@ -270,15 +269,14 @@ const LoginPage = () => {
                     <p className="font-bold text-flux-navy">Teacher</p>
                     <p className="mt-1 text-xs text-slate-500 font-medium">Manage classes</p>
                   </button>
-                  
+
                   <button
                     type="button"
                     onClick={() => setSignupForm((prev) => ({ ...prev, role: 'student' }))}
-                    className={`relative rounded-xl border-2 p-4 text-left transition-all ${
-                      signupForm.role === 'student'
+                    className={`relative rounded-xl border-2 p-4 text-left transition-all ${signupForm.role === 'student'
                         ? 'border-flux-green bg-green-50/50 shadow-md transform -translate-y-1'
                         : 'border-slate-100 bg-white hover:border-slate-300'
-                    }`}
+                      }`}
                   >
                     <div className={`absolute top-3 right-3 w-4 h-4 rounded-full border-2 ${signupForm.role === 'student' ? 'border-flux-green bg-flux-green' : 'border-slate-300'}`}>
                       {signupForm.role === 'student' && <div className="w-full h-full rounded-full border-2 border-white"></div>}

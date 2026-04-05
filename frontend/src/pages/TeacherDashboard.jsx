@@ -38,6 +38,10 @@ const TeacherDashboard = () => {
       setError('');
       await Promise.all([loadAssignments(status), loadSummary()]);
     } catch (err) {
+      if (err.response?.status === 401) {
+        logout();
+        return;
+      }
       setError(err.response?.data?.message || 'Failed to load dashboard data');
     }
   };
@@ -63,6 +67,10 @@ const TeacherDashboard = () => {
       setEditingAssignment(null);
       await refresh(activeFilter);
     } catch (err) {
+      if (err.response?.status === 401) {
+        logout();
+        return;
+      }
       setError(err.response?.data?.message || 'Save failed');
     }
   };
@@ -72,6 +80,10 @@ const TeacherDashboard = () => {
       await api.delete(`/assignments/teacher/${id}`);
       await refresh(activeFilter);
     } catch (err) {
+      if (err.response?.status === 401) {
+        logout();
+        return;
+      }
       setError(err.response?.data?.message || 'Delete failed');
     }
   };
@@ -81,6 +93,10 @@ const TeacherDashboard = () => {
       await api.patch(`/assignments/teacher/${id}/status`, { status });
       await refresh(activeFilter);
     } catch (err) {
+      if (err.response?.status === 401) {
+        logout();
+        return;
+      }
       setError(err.response?.data?.message || 'Status update failed');
     }
   };
@@ -92,6 +108,10 @@ const TeacherDashboard = () => {
       setSubmissions(data);
       setIsSubmissionsOpen(true);
     } catch (err) {
+      if (err.response?.status === 401) {
+        logout();
+        return;
+      }
       setError(err.response?.data?.message || 'Failed to fetch submissions');
     }
   };
@@ -112,7 +132,7 @@ const TeacherDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans">
+    <div className="min-h-screen bg-slate-50/90 bg-app-bg bg-cover bg-fixed bg-center bg-blend-overlay font-sans">
       {/* Top Banner / Header */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
         <div className="mx-auto max-w-7xl px-4 py-4 md:px-10 flex flex-wrap items-center justify-between gap-4">

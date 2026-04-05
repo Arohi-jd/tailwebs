@@ -25,12 +25,16 @@ export const AuthProvider = ({ children }) => {
           setUser(data.user);
           localStorage.setItem('user', JSON.stringify(data.user));
         }
-      } catch {
-        setToken('');
-        setUser(null);
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        setAuthToken('');
+      } catch (err) {
+        const status = err?.response?.status;
+
+        if (status === 401 || status === 403) {
+          setToken('');
+          setUser(null);
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          setAuthToken('');
+        }
       }
     };
 
